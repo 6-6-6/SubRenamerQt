@@ -7,7 +7,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from pathlib import Path
-from NUtils import removeNonTargetFiles
+from .NUtils import removeNonTargetFiles
 
 
 class NQListWidget(QListWidget):

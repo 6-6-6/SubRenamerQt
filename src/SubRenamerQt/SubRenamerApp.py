@@ -6,8 +6,8 @@ from pathlib import Path
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from NQListWidget import NQListWidget
-from NUtils import toOrdinal
+from .NQListWidget import NQListWidget
+from .NUtils import toOrdinal
 
 
 class Ui_MainWindow(object):
@@ -144,8 +144,10 @@ class Ui_MainWindow(object):
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
             msg.setText(QCoreApplication.translate(
+                "ErrorMsgBox",
                 "The number of video files does not" +
-                " match the number of subtitles."))
+                " match the number of subtitles.",
+                None))
             msg.exec_()
             return
         #
@@ -178,9 +180,13 @@ class Ui_MainWindow(object):
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
             msg.setText(QCoreApplication.translate(
-                "I have not prepared to rename the subtitles."))
+                "ErrorMsgBox",
+                "I have not prepared to rename the subtitles.",
+                None))
             msg.setDetailedText(QCoreApplication.translate(
-                "Please click \"Preview\" first."))
+                "ErrorMsgBox",
+                "Please click \"Preview\" first.",
+                None))
             msg.exec_()
             return
         # catch exceptions while renaming the things
@@ -197,8 +203,10 @@ class Ui_MainWindow(object):
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
             msg.setText(QCoreApplication.translate(
+                "ErrorMsgBox",
                 "An exception is encountered while renaming " +
-                f"the {toOrdinal(i+1)} subtitle."))
+                f"the {toOrdinal(i+1)} subtitle.",
+                None))
             msg.setDetailedText(f"{ex}")
             msg.exec_()
         self.setIsPrepared(False)
