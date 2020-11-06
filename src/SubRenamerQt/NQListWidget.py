@@ -61,7 +61,7 @@ class NQListWidget(QListWidget):
             self.clear()
             # get list of file and strings to-be-displayed
             urls = event.mimeData().urls()
-            fileList = [Path(_.path()) for _ in urls]
+            fileList = [Path(_.toLocalFile()) for _ in urls]
             fileList = removeNonTargetFiles(fileList, hint=self.hint)
             fileKeys = [_.name for _ in fileList]
             # update dict
