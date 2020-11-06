@@ -6,3 +6,10 @@ A GUI tool to rename subtitle files intuitively.
 ```
 PyQt5
 ```
+
+## Installation
+```
+# install PyQt5 before
+cd path/to/this/repo
+pip3 install .
+```
