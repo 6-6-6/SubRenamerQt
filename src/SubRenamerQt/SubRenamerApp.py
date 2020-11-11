@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1400, 600)
+        self.mainWindow = MainWindow
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
@@ -24,7 +25,7 @@ class Ui_MainWindow(object):
         self.smallFont = QFont()
         self.smallFont.setPointSize(9)
         self.mediumFont = QFont()
-        self.mediumFont.setPointSize(12)
+        self.mediumFont.setPointSize(11)
 
         self.initListPreviewWidget()
         self.initMultiFunctionWidget()
@@ -98,6 +99,12 @@ class Ui_MainWindow(object):
         self.checkBox.setGeometry(QRect(530, 0, 491, 30))
         self.checkBox.setMinimumSize(QSize(130, 30))
         self.checkBox.setFont(self.mediumFont)
+        #
+        self.onTopBox = QCheckBox(self.MultiFuncWidget)
+        self.onTopBox.setObjectName("onTopBox")
+        self.onTopBox.setGeometry(QRect(1020, 0, 491, 30))
+        self.onTopBox.setMinimumSize(QSize(130, 30))
+        self.onTopBox.setFont(self.mediumFont)
 
         self.gridLayout.addWidget(self.MultiFuncWidget, 2, 0, 1, 1)
 
@@ -128,6 +135,13 @@ class Ui_MainWindow(object):
             "MainWindow",
             "Move Subtitles to The Directory of Video Files",
             None))
+        #
+        self.onTopBox.setText(QCoreApplication.translate(
+            "MainWindow",
+            "Always on Top",
+            None))
+        self.onTopBox.stateChanged.connect(self.setOnTop)
+        self.onTopBox.setCheckState(Qt.Checked)
     # retranslateUi
 
     def setIsPrepared(self, state):
@@ -137,6 +151,14 @@ class Ui_MainWindow(object):
             self.newSub = {}
             self.NewSubtitles.clear()
             self.isPrepared = False
+
+    def setOnTop(self, state):
+        flags = self.mainWindow.windowFlags()
+        if Qt.Checked == state:
+            self.mainWindow.setWindowFlags(flags | Qt.WindowStaysOnTopHint)
+        else:
+            self.mainWindow.setWindowFlags(flags & ~Qt.WindowStaysOnTopHint)
+        self.mainWindow.show()
 
     def fillNewSubtitles(self):
         if self.VideoFiles.count() != self.OldSubtitles.count():
@@ -221,5 +243,3 @@ def main():
     w.show()
 
     app.exec_()
-
-
