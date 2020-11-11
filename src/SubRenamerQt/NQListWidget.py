@@ -71,6 +71,15 @@ class NQListWidget(QListWidget):
             #
             self.sortItems()
 
+    # delete selected items while pressing 'delete'
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Delete:
+            self.delSelectedItem()
+
+    def delSelectedItem(self):
+        for item in self.selectedItems():
+            self.takeItem(self.row(item))
+
     # override sortItems()
     def sortItems(self):
         self.parent().setIsPrepared(False)
