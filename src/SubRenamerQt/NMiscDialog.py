@@ -101,7 +101,7 @@ class NMiscDialog(object):
             # trigger filter
             tmpDict['filter'].setText(QCoreApplication.translate(
                 self.appId,
-                "Filter Existing {widget}",
+                f"Filter Existing {widget}",
                 None))
             # sort the list
             tmpDict['sort'].setText(QCoreApplication.translate(
