@@ -1,5 +1,5 @@
 ## Introduction
-A GUI tool to rename subtitle files intuitively.
+A GUI tool to help you rename subtitle files intuitively.
 
 
 ## Requirements

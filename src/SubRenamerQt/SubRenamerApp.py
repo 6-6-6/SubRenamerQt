@@ -96,13 +96,13 @@ class Ui_MainWindow(object):
         #
         self.checkBox = QCheckBox(self.MultiFuncWidget)
         self.checkBox.setObjectName("checkBox_2")
-        self.checkBox.setGeometry(QRect(530, 0, 491, 30))
+        self.checkBox.setGeometry(QRect(530, 0, 400, 30))
         self.checkBox.setMinimumSize(QSize(130, 30))
         self.checkBox.setFont(self.mediumFont)
         #
         self.onTopBox = QCheckBox(self.MultiFuncWidget)
         self.onTopBox.setObjectName("onTopBox")
-        self.onTopBox.setGeometry(QRect(1020, 0, 491, 30))
+        self.onTopBox.setGeometry(QRect(950, 0, 200, 30))
         self.onTopBox.setMinimumSize(QSize(130, 30))
         self.onTopBox.setFont(self.mediumFont)
 
@@ -116,11 +116,11 @@ class Ui_MainWindow(object):
         # self.VideoFiles.setSortingEnabled(False)
         # self.VideoFiles.setSortingEnabled(__sortingEnabled)
         self.SortList1Button.setText(QCoreApplication.translate(
-            "MainWindow", "Sort List1", None))
+            "MainWindow", "Sort Videos", None))
         self.SortList1Button.clicked.connect(self.VideoFiles.sortItems)
         #
         self.SortList2Button.setText(QCoreApplication.translate(
-            "MainWindow", "Sort List2", None))
+            "MainWindow", "Sort Subtitles", None))
         self.SortList1Button.clicked.connect(self.OldSubtitles.sortItems)
         #
         self.PreviewButton.setText(QCoreApplication.translate(
@@ -192,8 +192,6 @@ class Ui_MainWindow(object):
             self.NewSubtitles.addItem(fname)
             self.newSub[fname] = Path(dstPfx / fname)
         self.setIsPrepared(True)
-
-    # @pyqtSlot()
 
     def renameSubtitles(self):
         # check whether the app is prepared to rename the stuffs
