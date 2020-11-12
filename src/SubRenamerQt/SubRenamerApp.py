@@ -12,12 +12,12 @@ from .NUtils import toOrdinal
 
 class Ui_MainWindow(object):
 
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1400, 600)
-        self.mainWindow = MainWindow
-        self.centralwidget = QWidget(MainWindow)
+    def setupUi(self, mainWindow):
+        if not mainWindow.objectName():
+            mainWindow.setObjectName("mainWindow")
+        mainWindow.resize(1400, 600)
+        self.mainWindow = mainWindow
+        self.centralwidget = QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
@@ -30,126 +30,115 @@ class Ui_MainWindow(object):
         self.initListPreviewWidget()
         self.initMultiFunctionWidget()
 
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.mainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(mainWindow)
 
-        QMetaObject.connectSlotsByName(MainWindow)
+        QMetaObject.connectSlotsByName(mainWindow)
     # setupUi
 
     def initListPreviewWidget(self):
-        self.ListWidget = QWidget(self.centralwidget)
-        self.ListWidget.setObjectName("ListWidget")
-        self.horizontalLayout_2 = QHBoxLayout(self.ListWidget)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.listPreviewWidget = QWidget(self.centralwidget)
+        self.listPreviewWidget.setObjectName("listPreviewWidget")
+        self.listPreviewLayout = QHBoxLayout(self.listPreviewWidget)
+        self.listPreviewLayout.setObjectName("listPreviewLayout")
         # list 1
-        self.VideoFiles = NQListWidget(self, self.ListWidget, hint="video")
-        self.VideoFiles.setObjectName("VideoFiles")
-        self.VideoFiles.setFont(self.smallFont)
-        self.horizontalLayout.addWidget(self.VideoFiles)
+        self.videoFiles = NQListWidget(self, self.listPreviewWidget, hint="video")
+        self.videoFiles.setObjectName("videoFiles")
+        self.videoFiles.setFont(self.smallFont)
+        self.listPreviewLayout.addWidget(self.videoFiles)
         # list 2
-        self.OldSubtitles = NQListWidget(
-            self, self.ListWidget, hint="subtitle")
-        self.OldSubtitles.setObjectName("OldSubtitles")
-        self.OldSubtitles.setFont(self.smallFont)
-        self.horizontalLayout.addWidget(self.OldSubtitles)
+        self.oldSubtitles = NQListWidget(
+            self, self.listPreviewWidget, hint="subtitle")
+        self.oldSubtitles.setObjectName("oldSubtitles")
+        self.oldSubtitles.setFont(self.smallFont)
+        self.listPreviewLayout.addWidget(self.oldSubtitles)
         # list 3
-        self.NewSubtitles = QListWidget(self.ListWidget)
-        self.NewSubtitles.setObjectName("NewSubtitles")
-        self.NewSubtitles.setFont(self.smallFont)
-        self.horizontalLayout.addWidget(self.NewSubtitles)
+        self.newSubtitles = QListWidget(self.listPreviewWidget)
+        self.newSubtitles.setObjectName("newSubtitles")
+        self.newSubtitles.setFont(self.smallFont)
+        self.listPreviewLayout.addWidget(self.newSubtitles)
         # state
         self.setIsPrepared(False)
 
-        self.horizontalLayout_2.addLayout(self.horizontalLayout)
-
-        self.gridLayout.addWidget(self.ListWidget, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.listPreviewWidget, 1, 0, 1, 1)
 
     def initMultiFunctionWidget(self):
-        self.MultiFuncWidget = QWidget(self.centralwidget)
-        self.MultiFuncWidget.setObjectName("MultiFuncWidget")
-        self.MultiFuncWidget.setMinimumSize(QSize(0, 30))
-        self.MultiFuncWidget.setMaximumSize(QSize(16777215, 30))
-        #
-        self.SortList1Button = QPushButton(self.MultiFuncWidget)
-        self.SortList1Button.setObjectName("SortList1Button")
-        self.SortList1Button.setGeometry(QRect(10, 0, 122, 30))
-        self.SortList1Button.setMinimumSize(QSize(122, 30))
-        self.SortList1Button.setFont(self.mediumFont)
-        self.SortList2Button = QPushButton(self.MultiFuncWidget)
-        self.SortList2Button.setObjectName("SortList2Button")
-        self.SortList2Button.setGeometry(QRect(140, 0, 122, 30))
-        self.SortList2Button.setMinimumSize(QSize(122, 30))
-        self.SortList2Button.setFont(self.mediumFont)
-        self.PreviewButton = QPushButton(self.MultiFuncWidget)
-        self.PreviewButton.setObjectName("PreviewButton")
-        self.PreviewButton.setGeometry(QRect(270, 0, 122, 30))
-        self.PreviewButton.setMinimumSize(QSize(122, 30))
-        self.PreviewButton.setFont(self.mediumFont)
-        self.RunButton = QPushButton(self.MultiFuncWidget)
-        self.RunButton.setObjectName("RunButton")
-        self.RunButton.setGeometry(QRect(400, 0, 122, 30))
-        self.RunButton.setMinimumSize(QSize(122, 30))
-        self.RunButton.setFont(self.mediumFont)
-        #
-        self.checkBox = QCheckBox(self.MultiFuncWidget)
-        self.checkBox.setObjectName("checkBox_2")
-        self.checkBox.setGeometry(QRect(530, 0, 400, 30))
-        self.checkBox.setMinimumSize(QSize(130, 30))
-        self.checkBox.setFont(self.mediumFont)
-        #
-        self.onTopBox = QCheckBox(self.MultiFuncWidget)
-        self.onTopBox.setObjectName("onTopBox")
-        self.onTopBox.setGeometry(QRect(950, 0, 200, 30))
-        self.onTopBox.setMinimumSize(QSize(130, 30))
-        self.onTopBox.setFont(self.mediumFont)
+        # initialize widget
+        self.multiFuncWidget = QWidget(self.centralwidget)
+        self.multiFuncWidget.setObjectName("multiFuncWidget")
+        self.multiFuncWidget.setMinimumSize(QSize(0, 40))
+        self.multiFuncWidget.setMaximumSize(QSize(16777215, 40))
+        ## set a layout
+        self.mFWidgetLayout = QHBoxLayout(self.multiFuncWidget)
+        self.mFWidgetLayout.setObjectName("mFWidgetLayout")
 
-        self.gridLayout.addWidget(self.MultiFuncWidget, 2, 0, 1, 1)
+        # initialize buttons
+        buttons = ['PreviewButton',
+                'RunButton',
+                'MiscsButton']
+        for button in buttons:
+            tmpButton = QPushButton(self.multiFuncWidget)
+            tmpButton.setObjectName(button)
+            tmpButton.setMinimumSize(QSize(122, 35))
+            tmpButton.setMaximumSize(QSize(122, 35))
+            tmpButton.setFont(self.mediumFont)
+            self.__dict__[button] = tmpButton
+            self.mFWidgetLayout.addWidget(tmpButton)
+        #
+        boxes = ['ToVideosBox', 'OnTopBox']
+        for box in boxes:
+            tmpBox = QCheckBox(self.multiFuncWidget)
+            tmpBox.setObjectName(box)
+            tmpBox.setMinimumSize(QSize(130, 35))
+            tmpBox.setMaximumSize(QSize(450, 35))
+            tmpBox.setFont(self.mediumFont)
+            self.__dict__[box] = tmpBox
+            self.mFWidgetLayout.addWidget(tmpBox)
+
+        self.__dict__[boxes[-1]].setMaximumSize(QSize(8192, 35))
+        self.gridLayout.addWidget(self.multiFuncWidget, 2, 0, 1, 1)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate(
-            "MainWindow", "SubRenamerQt", None))
+            "mainWindow", "SubRenamerQt", None))
 
-        #__sortingEnabled = self.VideoFiles.isSortingEnabled()
-        # self.VideoFiles.setSortingEnabled(False)
-        # self.VideoFiles.setSortingEnabled(__sortingEnabled)
-        self.SortList1Button.setText(QCoreApplication.translate(
-            "MainWindow", "Sort Videos", None))
-        self.SortList1Button.clicked.connect(self.VideoFiles.sortItems)
-        #
-        self.SortList2Button.setText(QCoreApplication.translate(
-            "MainWindow", "Sort Subtitles", None))
-        self.SortList1Button.clicked.connect(self.OldSubtitles.sortItems)
-        #
+        # translate PreviewButton
         self.PreviewButton.setText(QCoreApplication.translate(
-            "MainWindow", "Preview", None))
+            "mainWindow", "Preview", None))
         self.PreviewButton.clicked.connect(self.fillNewSubtitles)
-        #
+        # translate RunButton
         self.RunButton.setText(QCoreApplication.translate(
-            "MainWindow", "Run", None))
+            "mainWindow", "Run", None))
         self.RunButton.clicked.connect(self.renameSubtitles)
+        # translate MiscsButton
+        self.MiscsButton.setText(QCoreApplication.translate(
+            "mainWindow", "Misc", None))
+        self.MiscsButton.clicked.connect(self.createMiscDialogue)
         #
-        self.checkBox.setText(QCoreApplication.translate(
-            "MainWindow",
+        self.ToVideosBox.setText(QCoreApplication.translate(
+            "mainWindow",
             "Move Subtitles to The Directory of Video Files",
             None))
         #
-        self.onTopBox.setText(QCoreApplication.translate(
-            "MainWindow",
+        self.OnTopBox.setText(QCoreApplication.translate(
+            "mainWindow",
             "Always on Top",
             None))
-        self.onTopBox.stateChanged.connect(self.setOnTop)
-        self.onTopBox.setCheckState(Qt.Checked)
+        self.OnTopBox.stateChanged.connect(self.setOnTop)
+        self.OnTopBox.setCheckState(Qt.Checked)
     # retranslateUi
+
+    def createMiscDialogue(self):
+        dlg = QDialog()
+        dlg.exec_()
 
     def setIsPrepared(self, state):
         if state:
             self.isPrepared = True
         else:
             self.newSub = {}
-            self.NewSubtitles.clear()
+            self.newSubtitles.clear()
             self.isPrepared = False
 
     def setOnTop(self, state):
@@ -161,7 +150,7 @@ class Ui_MainWindow(object):
         self.mainWindow.show()
 
     def fillNewSubtitles(self):
-        if self.VideoFiles.count() != self.OldSubtitles.count():
+        if self.videoFiles.count() != self.oldSubtitles.count():
             # msgbox
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -175,21 +164,21 @@ class Ui_MainWindow(object):
         #
         self.setIsPrepared(False)
         #
-        for i in range(self.OldSubtitles.count()):
+        for i in range(self.oldSubtitles.count()):
             #
-            videoFile = self.VideoFiles.item(i).text()
-            subtitleName = self.VideoFiles.realData[videoFile].stem
+            videoFile = self.videoFiles.item(i).text()
+            subtitleName = self.videoFiles.realData[videoFile].stem
             #
-            oldSubtitle = self.OldSubtitles.item(i).text()
-            subtitleSfx = self.OldSubtitles.realData[oldSubtitle].suffix
+            oldSubtitle = self.oldSubtitles.item(i).text()
+            subtitleSfx = self.oldSubtitles.realData[oldSubtitle].suffix
             #
-            if self.checkBox.isChecked():
-                dstPfx = self.VideoFiles.realData[videoFile].parent
+            if self.ToVideosBox.isChecked():
+                dstPfx = self.videoFiles.realData[videoFile].parent
             else:
-                dstPfx = self.OldSubtitles.realData[oldSubtitle].parent
+                dstPfx = self.oldSubtitles.realData[oldSubtitle].parent
             #
             fname = subtitleName + subtitleSfx
-            self.NewSubtitles.addItem(fname)
+            self.newSubtitles.addItem(fname)
             self.newSub[fname] = Path(dstPfx / fname)
         self.setIsPrepared(True)
 
@@ -211,12 +200,12 @@ class Ui_MainWindow(object):
             return
         # catch exceptions while renaming the things
         try:
-            for i in range(self.OldSubtitles.count()):
+            for i in range(self.oldSubtitles.count()):
                 #
-                oldSubtitle = self.OldSubtitles.item(i).text()
-                oldSubtitle = self.OldSubtitles.realData[oldSubtitle]
+                oldSubtitle = self.oldSubtitles.item(i).text()
+                oldSubtitle = self.oldSubtitles.realData[oldSubtitle]
                 #
-                newSubtitle = self.newSub[self.NewSubtitles.item(i).text()]
+                newSubtitle = self.newSub[self.newSubtitles.item(i).text()]
                 #
                 shutil.move(oldSubtitle, newSubtitle)
         except Exception as ex:
