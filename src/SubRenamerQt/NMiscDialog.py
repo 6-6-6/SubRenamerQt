@@ -30,7 +30,7 @@ class NMiscDialog(object):
             lambda: self.parent().videoFiles.setItemFilter(
                 vDict['inputBox'].text()))
         vDict['clear'].clicked.connect(
-            lambda: self.parent().videoFiles.setItemFilter(None))
+            lambda: self.parent().videoFiles.setItemFilter('.'))
         vDict['filter'].clicked.connect(
             lambda: self.parent().videoFiles.applyItemFilter())
         vDict['sort'].clicked.connect(
@@ -40,7 +40,7 @@ class NMiscDialog(object):
             lambda: self.parent().oldSubtitles.setItemFilter(
                 sDict['inputBox'].text()))
         sDict['clear'].clicked.connect(
-            lambda: self.parent().oldSubtitles.setItemFilter(None))
+            lambda: self.parent().oldSubtitles.setItemFilter('.'))
         sDict['filter'].clicked.connect(
             lambda: self.parent().oldSubtitles.applyItemFilter())
         sDict['sort'].clicked.connect(

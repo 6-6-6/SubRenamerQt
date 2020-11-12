@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 
+import re
 import weakref
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -16,13 +17,14 @@ class NQListWidget(QListWidget):
         super().__init__(*args, **kwargs)
         self.setAcceptDrops(True)
         self.parent = weakref.ref(parent)
-        # accept manually reorder items
+        # we can manually reorder items
         self.setDragDropMode(self.InternalMove)
         self.setSelectionMode(self.ExtendedSelection)
         self.hint = hint
-        # mapping displayed data and real data
+        # map displayed data and real data
         self.realData = {}
         self.addedItems = set()
+        self.itemFilter = re.compile('.')
 
     def addItem(self, item):
         self.parent().setIsPrepared(False)
@@ -34,7 +36,9 @@ class NQListWidget(QListWidget):
         list(map(self.addItem, items))
 
     def applyItemFilter(self):
-        pass
+        for i in reversed(range(self.count())):
+            if not self.itemFilter.search(self.item(i).text()):
+                self.takeItem(i)
 
     def clear(self):
         self.parent().setIsPrepared(False)
@@ -66,6 +70,9 @@ class NQListWidget(QListWidget):
             urls = event.mimeData().urls()
             fileList = [Path(_.toLocalFile()) for _ in urls]
             fileList = removeNonTargetFiles(fileList, hint=self.hint)
+            fileList = list(filter(
+                lambda x: self.itemFilter.search(str(x)),
+                fileList))
             fileKeys = [_.name for _ in fileList]
             # update dict
             self.realData.update(dict(zip(fileKeys, fileList)))
@@ -84,7 +91,7 @@ class NQListWidget(QListWidget):
             self.takeItem(self.row(item))
 
     def setItemFilter(self, itemFilter):
-        pass
+        self.itemFilter = re.compile(itemFilter)
 
     # override sortItems()
     def sortItems(self):
