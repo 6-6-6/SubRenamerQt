@@ -132,6 +132,7 @@ class Ui_MainWindow(object):
     # retranslateUi
 
     def createMiscDialog(self):
+        self.setIsPrepared(False)
         dlg = QDialog()
         dlgUi = NMiscDialog(self, dlg)
         dlg.exec_()

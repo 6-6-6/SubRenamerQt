@@ -33,6 +33,9 @@ class NQListWidget(QListWidget):
     def addItems(self, items):
         list(map(self.addItem, items))
 
+    def applyItemFilter(self):
+        pass
+
     def clear(self):
         self.parent().setIsPrepared(False)
         self.realData = {}
@@ -79,6 +82,9 @@ class NQListWidget(QListWidget):
     def delSelectedItem(self):
         for item in self.selectedItems():
             self.takeItem(self.row(item))
+
+    def setItemFilter(self, itemFilter):
+        pass
 
     # override sortItems()
     def sortItems(self):
