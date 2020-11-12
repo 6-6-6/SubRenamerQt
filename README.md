@@ -13,3 +13,9 @@ PyQt5
 cd path/to/this/repo
 pip3 install .
 ```
+
+## TODO list
+- [x] delete selected items when pressing 'delete'
+- [x] drag & drop to rearrange items
+- [x] make the app always on top
+- [x] filter filenames with regex
