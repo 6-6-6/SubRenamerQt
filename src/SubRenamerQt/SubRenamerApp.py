@@ -43,7 +43,8 @@ class Ui_MainWindow(object):
         self.listPreviewLayout = QHBoxLayout(self.listPreviewWidget)
         self.listPreviewLayout.setObjectName("listPreviewLayout")
         # list 1
-        self.videoFiles = NQListWidget(self, self.listPreviewWidget, hint="video")
+        self.videoFiles = NQListWidget(
+            self, self.listPreviewWidget, hint="video")
         self.videoFiles.setObjectName("videoFiles")
         self.videoFiles.setFont(self.smallFont)
         self.listPreviewLayout.addWidget(self.videoFiles)
@@ -75,15 +76,15 @@ class Ui_MainWindow(object):
 
         # initialize buttons
         buttons = ['PreviewButton',
-                'RunButton',
-                'MiscsButton']
+                   'RunButton',
+                   'MiscsButton']
         for button in buttons:
             tmpButton = QPushButton(self.multiFuncWidget)
             tmpButton.setObjectName(button)
             tmpButton.setMinimumSize(QSize(122, 35))
             tmpButton.setMaximumSize(QSize(122, 35))
             tmpButton.setFont(self.mediumFont)
-            self.__dict__[button] = tmpButton
+            setattr(self, button, tmpButton)
             self.mFWidgetLayout.addWidget(tmpButton)
         #
         boxes = ['ToVideosBox', 'OnTopBox']
@@ -93,10 +94,10 @@ class Ui_MainWindow(object):
             tmpBox.setMinimumSize(QSize(130, 35))
             tmpBox.setMaximumSize(QSize(450, 35))
             tmpBox.setFont(self.mediumFont)
-            self.__dict__[box] = tmpBox
+            setattr(self, box, tmpBox)
             self.mFWidgetLayout.addWidget(tmpBox)
 
-        self.__dict__[boxes[-1]].setMaximumSize(QSize(8192, 35))
+        getattr(self, boxes[-1]).setMaximumSize(QSize(8192, 35))
         self.gridLayout.addWidget(self.multiFuncWidget, 2, 0, 1, 1)
 
     def retranslateUi(self, MainWindow):
