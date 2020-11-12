@@ -6,6 +6,7 @@ from pathlib import Path
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from .NMiscDialog import NMiscDialog
 from .NQListWidget import NQListWidget
 from .NUtils import toOrdinal
 
@@ -115,7 +116,7 @@ class Ui_MainWindow(object):
         # translate MiscsButton
         self.MiscsButton.setText(QCoreApplication.translate(
             "mainWindow", "Misc", None))
-        self.MiscsButton.clicked.connect(self.createMiscDialogue)
+        self.MiscsButton.clicked.connect(self.createMiscDialog)
         #
         self.ToVideosBox.setText(QCoreApplication.translate(
             "mainWindow",
@@ -130,8 +131,9 @@ class Ui_MainWindow(object):
         self.OnTopBox.setCheckState(Qt.Checked)
     # retranslateUi
 
-    def createMiscDialogue(self):
+    def createMiscDialog(self):
         dlg = QDialog()
+        dlgUi = NMiscDialog(self, dlg)
         dlg.exec_()
 
     def setIsPrepared(self, state):
