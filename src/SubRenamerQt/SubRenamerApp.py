@@ -13,6 +13,13 @@ from .NUtils import toOrdinal
 
 class Ui_MainWindow(object):
 
+    buttons = {'PreviewButton': ['Preview', 'fillNewSubtitles'],
+               'RunButton': ['Run', 'renameSubtitles'],
+               'MiscsButton': ['Misc', 'createMiscDialog']}
+
+    boxes = {'ToVideosBox': ['Move Subtitles to The Directory of Video Files', None],
+             'OnTopBox': ['Always on Top', 'setOnTop']}
+
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
             mainWindow.setObjectName("mainWindow")
@@ -69,66 +76,76 @@ class Ui_MainWindow(object):
         # initialize widget
         self.multiFuncWidget = QWidget(self.centralwidget)
         self.multiFuncWidget.setObjectName("multiFuncWidget")
-        self.multiFuncWidget.setMinimumSize(QSize(0, 40))
-        self.multiFuncWidget.setMaximumSize(QSize(16777215, 40))
         ## set a layout
         self.mFWidgetLayout = QHBoxLayout(self.multiFuncWidget)
         self.mFWidgetLayout.setObjectName("mFWidgetLayout")
 
-        # initialize buttons
-        buttons = ['PreviewButton',
-                   'RunButton',
-                   'MiscsButton']
-        for button in buttons:
+        for button in self.buttons:
             tmpButton = QPushButton(self.multiFuncWidget)
             tmpButton.setObjectName(button)
-            tmpButton.setMinimumSize(QSize(122, 30))
-            tmpButton.setMaximumSize(QSize(122, 30))
-            tmpButton.setFont(self.mediumFont)
             setattr(self, button, tmpButton)
             self.mFWidgetLayout.addWidget(tmpButton)
         #
-        boxes = ['ToVideosBox', 'OnTopBox']
-        for box in boxes:
+        for box in self.boxes:
             tmpBox = QCheckBox(self.multiFuncWidget)
             tmpBox.setObjectName(box)
-            tmpBox.setMinimumSize(QSize(130, 30))
-            tmpBox.setMaximumSize(QSize(450, 30))
-            tmpBox.setFont(self.mediumFont)
             setattr(self, box, tmpBox)
             self.mFWidgetLayout.addWidget(tmpBox)
 
-        getattr(self, boxes[-1]).setMaximumSize(QSize(8192, 30))
         self.gridLayout.addWidget(self.multiFuncWidget, 2, 0, 1, 1)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate(
             "mainWindow", "SubRenamerQt", None))
+        # measure length of the button
+        met = QFontMetrics(self.mediumFont)
+        buttonWidth = 0
+        translatedText = []
 
-        # translate PreviewButton
-        self.PreviewButton.setText(QCoreApplication.translate(
-            "mainWindow", "Preview", None))
-        self.PreviewButton.clicked.connect(self.fillNewSubtitles)
-        # translate RunButton
-        self.RunButton.setText(QCoreApplication.translate(
-            "mainWindow", "Run", None))
-        self.RunButton.clicked.connect(self.renameSubtitles)
-        # translate MiscsButton
-        self.MiscsButton.setText(QCoreApplication.translate(
-            "mainWindow", "Misc", None))
-        self.MiscsButton.clicked.connect(self.createMiscDialog)
+        # translate texts, and get button width
+        for buttonName in self.buttons:
+            text = QCoreApplication.translate(
+                "mainWindow",
+                self.buttons[buttonName][0],
+                None)
+            translatedText.append(text)
+            text += '        '
+            if buttonWidth < met.horizontalAdvance(text):
+                buttonWidth = met.horizontalAdvance(text)
+        # set text
+        for buttonName in self.buttons:
+            button = getattr(self, buttonName)
+            func = getattr(self, self.buttons[buttonName][1])
+            button.setText(translatedText.pop(0))
+            button.clicked.connect(func)
+            button.setFont(self.mediumFont)
+            buttonHeight = button.sizeHint().height()
+            button.setMinimumSize(QSize(buttonWidth, buttonHeight))
+            button.setMaximumSize(QSize(buttonWidth, buttonHeight))
+
         #
-        self.ToVideosBox.setText(QCoreApplication.translate(
-            "mainWindow",
-            "Move Subtitles to The Directory of Video Files",
-            None))
-        #
-        self.OnTopBox.setText(QCoreApplication.translate(
-            "mainWindow",
-            "Always on Top",
-            None))
-        self.OnTopBox.stateChanged.connect(self.setOnTop)
+        for boxName in self.boxes:
+            text = QCoreApplication.translate(
+                "mainWindow",
+                self.boxes[boxName][0],
+                None)
+            box = getattr(self, boxName)
+            box.setText(text)
+            box.setFont(self.mediumFont)
+            boxWidth = box.sizeHint().width()
+            box.setMinimumSize(QSize(boxWidth, buttonHeight))
+            box.setMaximumSize(QSize(boxWidth, buttonHeight))
+            if self.boxes[boxName][1]:
+                func = getattr(self, self.boxes[boxName][1])
+                box.stateChanged.connect(func)
+        # make the app stay on top by default
         self.OnTopBox.setCheckState(Qt.Checked)
+        # set the length of the last widget to 65536
+        self.OnTopBox.setMaximumSize(QSize(65535, buttonHeight))
+        # set height of the parent
+        mFWHeight = self.multiFuncWidget.sizeHint().height()
+        self.multiFuncWidget.setMinimumSize(QSize(0, mFWHeight))
+        self.multiFuncWidget.setMaximumSize(QSize(16777215, mFWHeight))
     # retranslateUi
 
     def createMiscDialog(self):
