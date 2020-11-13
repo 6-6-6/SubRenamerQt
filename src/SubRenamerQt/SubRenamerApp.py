@@ -82,8 +82,8 @@ class Ui_MainWindow(object):
         for button in buttons:
             tmpButton = QPushButton(self.multiFuncWidget)
             tmpButton.setObjectName(button)
-            tmpButton.setMinimumSize(QSize(122, 35))
-            tmpButton.setMaximumSize(QSize(122, 35))
+            tmpButton.setMinimumSize(QSize(122, 30))
+            tmpButton.setMaximumSize(QSize(122, 30))
             tmpButton.setFont(self.mediumFont)
             setattr(self, button, tmpButton)
             self.mFWidgetLayout.addWidget(tmpButton)
@@ -92,13 +92,13 @@ class Ui_MainWindow(object):
         for box in boxes:
             tmpBox = QCheckBox(self.multiFuncWidget)
             tmpBox.setObjectName(box)
-            tmpBox.setMinimumSize(QSize(130, 35))
-            tmpBox.setMaximumSize(QSize(450, 35))
+            tmpBox.setMinimumSize(QSize(130, 30))
+            tmpBox.setMaximumSize(QSize(450, 30))
             tmpBox.setFont(self.mediumFont)
             setattr(self, box, tmpBox)
             self.mFWidgetLayout.addWidget(tmpBox)
 
-        getattr(self, boxes[-1]).setMaximumSize(QSize(8192, 35))
+        getattr(self, boxes[-1]).setMaximumSize(QSize(8192, 30))
         self.gridLayout.addWidget(self.multiFuncWidget, 2, 0, 1, 1)
 
     def retranslateUi(self, MainWindow):
@@ -133,7 +133,7 @@ class Ui_MainWindow(object):
 
     def createMiscDialog(self):
         self.setIsPrepared(False)
-        dlg = QDialog()
+        dlg = QDialog(self.centralwidget)
         dlgUi = NMiscDialog(self, dlg)
         dlg.exec_()
 

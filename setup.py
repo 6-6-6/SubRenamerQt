@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="SubRenamerQt",
-    version="0.2.1",
+    version="0.2.1-SNAPSHOT",
     author="Zhang Zongyu",
     author_email="zongyu@novazy.net",
     description="Rename subtitle files intuitively",
