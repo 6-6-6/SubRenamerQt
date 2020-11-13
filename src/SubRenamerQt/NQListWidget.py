@@ -85,6 +85,8 @@ class NQListWidget(QListWidget):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:
             self.delSelectedItem()
+        elif event.key() == Qt.Key_Backspace:
+            self.delSelectedItem()
 
     def delSelectedItem(self):
         for item in self.selectedItems():
