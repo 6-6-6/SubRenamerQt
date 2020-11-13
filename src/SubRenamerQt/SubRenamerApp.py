@@ -154,6 +154,20 @@ class Ui_MainWindow(object):
         dlgUi = NMiscDialog(self, dlg)
         dlg.exec_()
 
+    def createMessageBox(self, level, msg, detailedMsg=None):
+        msgBox = QMessageBox(self.centralwidget)
+        msgBox.setIcon(level)
+        msgBox.setText(QCoreApplication.translate(
+            "ErrorMsgBox",
+            msg,
+            None))
+        if detailedMsg:
+            msgBox.setDetailedText(QCoreApplication.translate(
+                "ErrorMsgBox",
+                detailedMsg,
+                None))
+        msgBox.exec_()
+
     def setIsPrepared(self, state):
         if state:
             self.isPrepared = True
@@ -171,19 +185,14 @@ class Ui_MainWindow(object):
         self.mainWindow.show()
 
     def fillNewSubtitles(self):
+        self.setIsPrepared(False)
         if self.videoFiles.count() != self.oldSubtitles.count():
-            # msgbox
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Information)
-            msg.setText(QCoreApplication.translate(
-                "ErrorMsgBox",
+            self.createMessageBox(
+                QMessageBox.Information,
                 "The number of video files does not" +
                 " match the number of subtitles.",
-                None))
-            msg.exec_()
+                None)
             return
-        #
-        self.setIsPrepared(False)
         #
         for i in range(self.oldSubtitles.count()):
             #
@@ -207,17 +216,10 @@ class Ui_MainWindow(object):
         # check whether the app is prepared to rename the stuffs
         if not self.isPrepared:
             # msgbox
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Information)
-            msg.setText(QCoreApplication.translate(
-                "ErrorMsgBox",
+            self.createMessageBox(
+                QMessageBox.Information,
                 "I have not prepared to rename the subtitles.",
-                None))
-            msg.setDetailedText(QCoreApplication.translate(
-                "ErrorMsgBox",
-                "Please click \"Preview\" first.",
-                None))
-            msg.exec_()
+                'Please click "Preview" first.')
             return
         # catch exceptions while renaming the things
         try:
@@ -230,15 +232,11 @@ class Ui_MainWindow(object):
                 #
                 shutil.move(oldSubtitle, newSubtitle)
         except Exception as ex:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Warning)
-            msg.setText(QCoreApplication.translate(
-                "ErrorMsgBox",
+            self.createMessageBox(
+                QMessageBox.Warning,
                 "An exception is encountered while renaming " +
                 f"the {toOrdinal(i+1)} subtitle.",
-                None))
-            msg.setDetailedText(f"{ex}")
-            msg.exec_()
+                f"{ex}")
         self.setIsPrepared(False)
 
 
